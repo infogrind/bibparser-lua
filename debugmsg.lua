@@ -1,3 +1,3 @@
 function debugmsg(s)
-    io.write("DEBUG: ", s, "\n")
+    -- io.write("DEBUG: ", s, "\n")
 end

@@ -16,3 +16,28 @@ Tokens.HASH     = Tokens.QUOTE + 1      -- #
 Tokens.STRING   = Tokens.HASH + 1       -- "fubar" or {fubar} (with nested {})
 Tokens.IDENT    = Tokens.STRING + 1     -- foo
 
+function token_to_string(t, s)
+  if t == Tokens.EOF then
+    return "EOF"
+  elseif t == Tokens.AT then
+    return "AT"
+  elseif t == Tokens.LBRACE then
+    return "LBRACE"
+  elseif t == Tokens.RBRACE then
+    return "RBRACE"
+  elseif t == Tokens.EQ then
+    return "EQ"
+  elseif t == Tokens.COMMA then
+    return "COMMA"
+  elseif t == Tokens.QUOTE then
+    return "QUOTE"
+  elseif t == Tokens.HASH then
+    return "HASH"
+  elseif t == Tokens.STRING then
+    return "STRING(" .. s .. ")"
+  elseif t == Tokens.IDENT then
+    return "IDENT(" .. s .. ")"
+  else
+    return nil
+  end
+end

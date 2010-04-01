@@ -8,6 +8,7 @@ function parser(scanner)
 
     function next_token()
         t, s = receive(scanner)
+        debugmsg("Found token: " .. token_to_string(t, s))
     end
 
     -- This function raises an error if the current token is not tok, and
@@ -17,13 +18,14 @@ function parser(scanner)
     function verify_token(tok, str)
         local val = s
         if t ~= tok then
-            error("Expected: " .. str)
+            error("Expected: " .. str .. ", found " .. token_to_string(t, s))
         end
         next_token()
         return val
     end
 
     function parse_bibtex()
+        debugmsg("Parsing bibtex file")
         while true do
             if t == Tokens.EOF then
                 break -- done parsing
@@ -35,6 +37,7 @@ function parser(scanner)
     end
 
     function parse_item()
+        debugmsg("Parsing item")
         local entry = {}
         local entrytype
 
@@ -53,6 +56,7 @@ function parser(scanner)
             entrytype = s
             next_token()
             name, attr = parse_entry()
+            assert(attr ~= nil)
             attr.type = entrytype
             if entries[name] ~= nil then
                 io.write("Warning: duplicate entry '", name, "'\n")
@@ -62,6 +66,7 @@ function parser(scanner)
     end
 
     function parse_macro()
+        debugmsg("Parsing macro")
         local name, value
         verify_token(Tokens.LBRACE, "{")
         name = verify_token(Tokens.IDENT, 'identifier')
@@ -73,6 +78,7 @@ function parser(scanner)
     end
 
     function parse_value()
+        debugmsg("Parsing value")
         buffer = {}
         if t ~= Tokens.IDENT and t ~= Tokens.STRING then
             error("Expected: identifier or string")
@@ -95,13 +101,15 @@ function parser(scanner)
                 next_token()
             else
                 -- This was the last part of the value.
+                debugmsg("end of value")
                 return table.concat(buffer)
             end
         until false
     end
 
     function parse_entry()
-        local name
+        debugmsg("Parsing entry")
+        local name, attr
 
         verify_token(Tokens.LBRACE, "{")
         name = verify_token(Tokens.IDENT, 'identifier')
@@ -109,6 +117,7 @@ function parser(scanner)
     end
 
     function parse_attributes()
+        debugmsg("Parsing attributes")
         attr = {}
 
         while t ~= Tokens.RBRACE do
@@ -117,15 +126,16 @@ function parser(scanner)
             if attr[name] ~= nil then
                 io.write("Warning: duplicate attribute '", name, "'\n")
             end
-            assert(name ~= nil)
             attr[name] = value
-            next_token()
         end
 
+        assert(attr ~= nil)
         next_token()
+        return attr
     end
 
     function parse_attribute()
+        debugmsg("Parsing attribute")
         local name = verify_token(Tokens.IDENT, 'identifier')
         local value
         verify_token(Tokens.EQ)
