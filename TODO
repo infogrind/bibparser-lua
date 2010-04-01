@@ -1,0 +1,1 @@
+- Mechanism for syntax errors to print line/column where error occurred.
