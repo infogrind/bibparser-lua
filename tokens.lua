@@ -34,9 +34,17 @@ function token_to_string(t, s)
   elseif t == Tokens.HASH then
     return "HASH"
   elseif t == Tokens.STRING then
-    return "STRING(" .. s .. ")"
+      if s ~= nil then
+          return "STRING(" .. s .. ")"
+      else
+          return "STRING"
+      end
   elseif t == Tokens.IDENT then
-    return "IDENT(" .. s .. ")"
+      if s ~= nil then
+          return "IDENT(" .. s .. ")"
+      else
+          return "IDENT"
+      end
   else
     return nil
   end

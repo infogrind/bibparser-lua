@@ -1,6 +1,10 @@
 require("sendrec")
 
-function charreader()
+function charreader(filename)
+    if filename ~= nil then
+        io.input(filename)
+    end
+
     return coroutine.create(function()
         while true do
             local c = io.read(1)
@@ -9,4 +13,5 @@ function charreader()
             if c == nil then break end
         end
     end)
+
 end
