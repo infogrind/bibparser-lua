@@ -65,11 +65,11 @@ function parser(scanner)
     function parse_macro()
         debugmsg("Parsing macro")
         local name, value
-        verify_token(Tokens.LBRACE, "{")
+        verify_token(Tokens.LBRACE)
         name = parse_ident()
-        verify_token(Tokens.EQ, "=")
+        verify_token(Tokens.EQ)
         value = parse_value()
-        verify_token(Tokens.RBRACE, '}')
+        verify_token(Tokens.RBRACE)
 
         return syntax.make_macro(name, value)
     end
@@ -103,7 +103,7 @@ function parser(scanner)
         debugmsg("Parsing entry")
         local name
 
-        verify_token(Tokens.LBRACE, "{")
+        verify_token(Tokens.LBRACE)
         name = parse_ident()
         return syntax.make_entry(name, parse_attributes())
     end
