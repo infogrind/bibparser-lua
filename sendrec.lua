@@ -6,9 +6,9 @@ function receive(prod)
     if status == false then
         error("Error in coroutine: " .. valarray)
     end
-    return unpack(valarray)
+    return table.unpack(valarray)
 end
 
 function send(...)
-    coroutine.yield(arg)
+    coroutine.yield({...})
 end

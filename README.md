@@ -22,8 +22,7 @@ For a more detailed example, see `test_parser.lua`.
 
 ### Prerequisites
 
-Lua 5.0 or 5.1 is required. Newer versions will probably break the current code, due to
-missing backwards compatibility. (Lua 5.3 will pretty surely not work.)
+Lua 5.2 is required.
 
 ### Installing
 
