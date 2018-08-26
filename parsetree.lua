@@ -42,7 +42,7 @@ function parser(scanner)
                 table.insert(items, item)
             end
         end
-        print("There are " .. table.getn(items) .. " items in total")
+        print("There are " .. #items .. " items in total")
         return syntax.make_bibtex(items)
     end
 
